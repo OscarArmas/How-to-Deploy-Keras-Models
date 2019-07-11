@@ -5,7 +5,7 @@
 ### 1.- De preferencia usar un entorno virtual
 
 ### 2.- Instalacion de paquetes:
-###### pip install -r requeriments.txt
+###### pip install -r requirements.txt
 
 ### 3.- ejecucion:
 ###### python keras_flask.py
