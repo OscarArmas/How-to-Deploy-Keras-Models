@@ -17,6 +17,7 @@ app = Flask(__name__)
 #Initialize some global variables
 global model, graph
 model, graph = init()
+# Separete the prefix of base64 of the content of image.
 def convertImage(imgData1):
     imgstr = re.search(r'base64,(.*)', str(imgData1)).group(1)
     with open('output.png', 'wb') as output:
@@ -25,7 +26,7 @@ def convertImage(imgData1):
 @app.route('/')
 def index():
     return render_template("index.html")
-
+#arrive the image by ajax
 @app.route('/predict/', methods=['GET', 'POST'])
 def predict():
  # Predict method is called when we push the 'Predict' button
@@ -36,12 +37,11 @@ def predict():
  # read the image into memory
     x = cv2.imread('output.png',0)
     x = np.invert(x)
-    print(type(x))
- # make it the right size
+ # make it the right size for the model
     x = cv2.resize(x,dsize=(28,28))
-    print(x.shape)
  #You can save the image (optional) to view later
     imageio.imwrite('final_image.png', x)
+    
     x = x.reshape(1, 28, 28, 1)
 
     with graph.as_default():
@@ -52,4 +52,3 @@ def predict():
 if __name__ == "__main__":
 # run the app locally on the given port
     app.run(host='localhost', port=5000)
-
